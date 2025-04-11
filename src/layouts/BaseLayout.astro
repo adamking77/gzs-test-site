@@ -7,6 +7,7 @@ import Footer from "@/components/global/Footer.astro"
 <html lang="en" class="scroll-smooth selection:bg-black selection:text-white">
   <head>
     <BaseHead />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
   <body class="bg-zinc-100 flex flex-col min-h-screen mx-auto 2xl:max-w-screen-xl relative">
 
@@ -14,5 +15,14 @@ import Footer from "@/components/global/Footer.astro"
     <main class="flex-grow"><slot /></main>
     <Footer/>
 
+    <script is:inline src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script is:inline>
+      AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 100,
+      });
+    </script>
   </body>
 </html>
