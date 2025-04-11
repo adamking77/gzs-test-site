@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "tailwind-scrollbar-hide";
+
+/* Import Noto Sans HK from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;600;700&display=swap');
+
+/* Global styles */
+:root {
+  font-family: 'Noto Sans HK', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+/* Typography Scale */
+h1 {
+  font-size: 3.5rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.63rem;
+  font-weight: 400;
+}
+
+body {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#1d273a] text-white hover:bg-[#f4f4f5] hover:text-[#1d273a] transition-all duration-200;
+}
+
+/* Remove variable font support since we're using specific weights */
