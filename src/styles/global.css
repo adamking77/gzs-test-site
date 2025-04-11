@@ -1,6 +1,7 @@
-/* Import Noto Sans HK from Google Fonts */
+/* Import Google Fonts first */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;400;500;600;700&display=swap');
 
+/* Import Tailwind */
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
