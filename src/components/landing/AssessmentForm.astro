@@ -34,13 +34,11 @@
       nextStep() {
         if (this.step < this.totalSteps) {
           this.step++
-          window.scrollTo({ top: 0, behavior: 'smooth' })
         }
       },
       prevStep() {
         if (this.step > 1) {
           this.step--
-          window.scrollTo({ top: 0, behavior: 'smooth' })
         }
       },
       submitForm() {
