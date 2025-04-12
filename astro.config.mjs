@@ -5,7 +5,7 @@ import alpinejs from "@astrojs/alpinejs";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), sitemap(), alpinejs()],
-  site: 'https://adamking77.github.io/genzen-solutions',
+  site: 'https://adamking77.github.io',
   base: '/genzen-solutions',
   output: 'static',
   build: {
