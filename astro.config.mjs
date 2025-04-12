@@ -7,8 +7,5 @@ export default defineConfig({
   integrations: [tailwind(), sitemap(), alpinejs()],
   site: 'https://adamking77.github.io',
   base: '/genzen-solutions',
-  output: 'static',
-  build: {
-    assets: 'astro'
-  }
+  trailingSlash: 'never'
 });
