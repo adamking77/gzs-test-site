@@ -1,0 +1,129 @@
+<section class="py-32 bg-[#f4f4f5]">
+  <div class="max-w-3xl mx-auto px-8">
+    <h2 class="text-h2 font-normal mb-12 text-[#222222]" data-aos="fade-up">Initial Assessment Application</h2>
+    
+    <div x-data="{
+      step: 1,
+      totalSteps: 3,
+      formData: {
+        name: '',
+        email: '',
+        company: '',
+        role: '',
+        situation: '',
+        timeline: '',
+        budget: ''
+      },
+      nextStep() {
+        if (this.step < this.totalSteps) {
+          this.step++
+        }
+      },
+      prevStep() {
+        if (this.step > 1) {
+          this.step--
+        }
+      },
+      submitForm() {
+        // Handle form submission here
+        console.log('Form submitted:', this.formData)
+      }
+    }" class="bg-white rounded-2xl shadow-lg p-8" data-aos="fade-up" data-aos-delay="100">
+      <!-- Progress bar -->
+      <div class="mb-8">
+        <div class="flex justify-between mb-2">
+          <template x-for="i in totalSteps" :key="i">
+            <div class="flex items-center">
+              <div :class="{'bg-[#1d273a]': step >= i, 'bg-gray-200': step < i}"
+                   class="w-8 h-8 rounded-full flex items-center justify-center text-white">
+                <span x-text="i"></span>
+              </div>
+              <div x-show="i < totalSteps" class="w-24 h-1 mx-2">
+                <div :class="{'bg-[#1d273a]': step > i, 'bg-gray-200': step <= i}"
+                     class="h-full transition-all duration-300"></div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Step 1: Basic Information -->
+      <div x-show="step === 1" class="space-y-6">
+        <h3 class="text-h3 font-normal mb-6 text-[#222222]">Basic Information</h3>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+          <input type="text" x-model="formData.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+          <input type="email" x-model="formData.email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Company/Organization</label>
+          <input type="text" x-model="formData.company" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Your Role</label>
+          <input type="text" x-model="formData.role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+        </div>
+      </div>
+
+      <!-- Step 2: Situation Details -->
+      <div x-show="step === 2" class="space-y-6">
+        <h3 class="text-h3 font-normal mb-6 text-[#222222]">Situation Details</h3>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Describe Your Situation</label>
+          <textarea x-model="formData.situation" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Timeline</label>
+          <select x-model="formData.timeline" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+            <option value="">Select a timeline</option>
+            <option value="immediate">Immediate (1-2 weeks)</option>
+            <option value="short">Short-term (1-3 months)</option>
+            <option value="medium">Medium-term (3-6 months)</option>
+            <option value="long">Long-term (6+ months)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Step 3: Budget & Submit -->
+      <div x-show="step === 3" class="space-y-6">
+        <h3 class="text-h3 font-normal mb-6 text-[#222222]">Budget & Submit</h3>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Budget Range</label>
+          <select x-model="formData.budget" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+            <option value="">Select a budget range</option>
+            <option value="small">$5,000 - $10,000</option>
+            <option value="medium">$10,000 - $25,000</option>
+            <option value="large">$25,000 - $50,000</option>
+            <option value="enterprise">$50,000+</option>
+          </select>
+        </div>
+        <div class="text-sm text-gray-600">
+          <p>By submitting this form, you agree to our privacy policy and terms of service.</p>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="flex justify-between mt-8">
+        <button x-show="step > 1" @click="prevStep" class="px-6 py-2 border border-[#1d273a] text-[#1d273a] rounded-full hover:bg-[#1d273a] hover:text-white transition-all duration-200">
+          Previous
+        </button>
+        <button x-show="step < totalSteps" @click="nextStep" class="ml-auto px-6 py-2 bg-[#1d273a] text-white rounded-full hover:bg-[#f4f4f5] hover:text-[#1d273a] hover:border-[#1d273a] border border-transparent transition-all duration-200">
+          Next
+        </button>
+        <button x-show="step === totalSteps" @click="submitForm" class="ml-auto px-6 py-2 bg-[#1d273a] text-white rounded-full hover:bg-[#f4f4f5] hover:text-[#1d273a] hover:border-[#1d273a] border border-transparent transition-all duration-200">
+          Submit Application
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Add Alpine.js
+  import Alpine from 'alpinejs'
+  window.Alpine = Alpine
+  Alpine.start()
+</script> 
