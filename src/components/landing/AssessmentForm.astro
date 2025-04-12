@@ -1,0 +1,238 @@
+<section class="py-16 sm:py-24 md:py-32 bg-[#f4f4f5]">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-normal mb-8 sm:mb-12 text-[#222222]" data-aos="fade-up">Initial Assessment Application</h2>
+    
+    <div x-data="{
+      step: 1,
+      totalSteps: 4,
+      formData: {
+        // Basic Information
+        name: '',
+        email: '',
+        contactMethod: '',
+        referralSource: '',
+        
+        // Context Overview
+        situation: [],
+        situationOther: '',
+        
+        // Pattern Recognition
+        situationDescription: '',
+        previousApproaches: '',
+        
+        // Urgency Assessment
+        timeline: '',
+        
+        // Strategic Alignment
+        transformationIndicators: [],
+        successDefinition: '',
+        
+        // Value Assessment
+        investmentRange: '',
+        additionalInformation: ''
+      },
+      nextStep() {
+        if (this.step < this.totalSteps) {
+          this.step++
+        }
+      },
+      prevStep() {
+        if (this.step > 1) {
+          this.step--
+        }
+      },
+      submitForm() {
+        // Handle form submission here
+        console.log('Form submitted:', this.formData)
+      }
+    }" class="rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8" data-aos="fade-up" data-aos-delay="100">
+      <!-- Progress bar -->
+      <div class="mb-6 sm:mb-8">
+        <div class="flex justify-between mb-2">
+          <template x-for="i in totalSteps" :key="i">
+            <div class="flex items-center">
+              <div :class="{'bg-[#1d273a]': step >= i, 'bg-gray-200': step < i}"
+                   class="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-sm sm:text-base">
+                <span x-text="i"></span>
+              </div>
+              <div x-show="i < totalSteps" class="w-12 sm:w-16 md:w-24 h-1 mx-1 sm:mx-2">
+                <div :class="{'bg-[#1d273a]': step > i, 'bg-gray-200': step <= i}"
+                     class="h-full transition-all duration-300"></div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Step headings -->
+      <h3 class="text-xl sm:text-2xl font-normal mb-4 sm:mb-6 text-[#222222]" x-text="
+        step === 1 ? 'Basic Information' :
+        step === 2 ? 'Context Overview' :
+        step === 3 ? 'Urgency Assessment' :
+        'Strategic Alignment'
+      "></h3>
+
+      <!-- Form sections with responsive spacing -->
+      <div class="space-y-4 sm:space-y-6">
+        <!-- Step 1: Basic Information -->
+        <template x-if="step === 1">
+          <div class="space-y-4 sm:space-y-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">Full Name</label>
+              <input type="text" x-model="formData.name" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">Email Address</label>
+              <input type="email" x-model="formData.email" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">Preferred Contact Method</label>
+              <select x-model="formData.contactMethod" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+                <option value="">Select preferred contact method</option>
+                <option value="email">Email</option>
+                <option value="phone">Phone</option>
+                <option value="encrypted">Encrypted Channel</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">How did you learn about GenZen Solutions?</label>
+              <input type="text" x-model="formData.referralSource" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+            </div>
+          </div>
+        </template>
+
+        <!-- Step 2: Context Overview & Pattern Recognition -->
+        <template x-if="step === 2">
+          <div class="space-y-4 sm:space-y-6">
+            <div class="space-y-3 sm:space-y-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Which best describes your current situation?</label>
+              <div class="grid gap-2 sm:gap-3">
+                <label class="flex items-start sm:items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <input type="checkbox" x-model="formData.situation" value="negotiation" class="mt-1 sm:mt-0 mr-3">
+                  <span class="text-[#222222] text-sm sm:text-base">High-stakes negotiation requiring strategic leverage</span>
+                </label>
+                <label class="flex items-start sm:items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <input type="checkbox" x-model="formData.situation" value="communication" class="mt-1 sm:mt-0 mr-3">
+                  <span class="text-[#222222] text-sm sm:text-base">Communication challenges with sophisticated manipulation</span>
+                </label>
+                <label class="flex items-start sm:items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <input type="checkbox" x-model="formData.situation" value="reputation" class="mt-1 sm:mt-0 mr-3">
+                  <span class="text-[#222222] text-sm sm:text-base">Potential threat to reputation or legacy</span>
+                </label>
+                <label class="flex items-start sm:items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <input type="checkbox" x-model="formData.situation" value="protection" class="mt-1 sm:mt-0 mr-3">
+                  <span class="text-[#222222] text-sm sm:text-base">Need for strategic protection in complex situation</span>
+                </label>
+                <label class="flex items-start sm:items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <input type="checkbox" x-model="formData.situation" value="extraction" class="mt-1 sm:mt-0 mr-3">
+                  <span class="text-[#222222] text-sm sm:text-base">Extraction from toxic relationship or arrangement</span>
+                </label>
+                <label class="flex items-start sm:items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <input type="checkbox" x-model="formData.situation" value="other" class="mt-1 sm:mt-0 mr-3">
+                  <span class="text-[#222222] text-sm sm:text-base">Other (please specify)</span>
+                </label>
+              </div>
+              <div x-show="formData.situation.includes('other')" class="mt-2">
+                <input type="text" x-model="formData.situationOther" placeholder="Please specify" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- Step 3: Urgency Assessment -->
+        <template x-if="step === 3">
+          <div class="space-y-4 sm:space-y-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">What is your timeline for resolution?</label>
+              <select x-model="formData.timeline" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+                <option value="">Select a timeline</option>
+                <option value="immediate">Immediate (within days)</option>
+                <option value="short">Short-term (within weeks)</option>
+                <option value="medium">Medium-term (within months)</option>
+                <option value="strategic">Strategic (ongoing situation)</option>
+              </select>
+            </div>
+          </div>
+        </template>
+
+        <!-- Step 4: Strategic Alignment & Value Assessment -->
+        <template x-if="step === 4">
+          <div class="space-y-4 sm:space-y-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Which of these outcomes would create the most significant impact?</label>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="checkbox" x-model="formData.transformationIndicators" value="control" class="mr-2">
+                  <span class="text-[#222222]">Maintaining control in high-stakes communications</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" x-model="formData.transformationIndicators" value="patterns" class="mr-2">
+                  <span class="text-[#222222]">Seeing manipulation patterns before they take effect</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" x-model="formData.transformationIndicators" value="vulnerabilities" class="mr-2">
+                  <span class="text-[#222222]">Transforming vulnerabilities into strategic advantages</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" x-model="formData.transformationIndicators" value="exit" class="mr-2">
+                  <span class="text-[#222222]">Designing effective exit strategies while protecting assets</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" x-model="formData.transformationIndicators" value="architectural" class="mr-2">
+                  <span class="text-[#222222]">Creating architectural control over critical situations</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" x-model="formData.transformationIndicators" value="power" class="mr-2">
+                  <span class="text-[#222222]">Restoring power in situations where it's being systematically stripped away</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">What would a successful outcome look like for you? What would be different in your situation?</label>
+              <textarea x-model="formData.successDefinition" rows="4" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">The investment for our Strategic Protection services begins at €10,000 per quarter. Is this within your expected investment range?</label>
+              <select x-model="formData.investmentRange" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent">
+                <option value="">Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                <option value="discuss">Prefer to discuss</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Is there anything else you believe would be important for us to know before our conversation?</label>
+              <textarea x-model="formData.additionalInformation" rows="4" class="w-full px-3 sm:px-4 py-2 text-base sm:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1d273a] focus:border-transparent"></textarea>
+            </div>
+          </div>
+        </template>
+
+        <!-- Navigation buttons with improved mobile styling -->
+        <div class="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 sm:mt-8">
+          <button x-show="step > 1" @click="prevStep" 
+                  class="w-full sm:w-auto order-2 sm:order-1 px-4 sm:px-6 py-2 sm:py-3 border border-[#1d273a] text-[#1d273a] rounded-full hover:bg-[#1d273a] hover:text-white transition-all duration-200 text-base sm:text-lg">
+            Previous
+          </button>
+          <button x-show="step < totalSteps" @click="nextStep"
+                  class="w-full sm:w-auto order-1 sm:order-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#1d273a] text-white rounded-full hover:bg-[#f4f4f5] hover:text-[#1d273a] hover:border-[#1d273a] border border-transparent transition-all duration-200 text-base sm:text-lg">
+            Next
+          </button>
+          <button x-show="step === totalSteps" @click="submitForm"
+                  class="w-full sm:w-auto order-1 sm:order-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#1d273a] text-white rounded-full hover:bg-[#f4f4f5] hover:text-[#1d273a] hover:border-[#1d273a] border border-transparent transition-all duration-200 text-base sm:text-lg">
+            Submit Application
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Add Alpine.js
+  import Alpine from 'alpinejs'
+  window.Alpine = Alpine
+  Alpine.start()
+</script> 
