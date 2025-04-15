@@ -1,26 +1,35 @@
 ---
 import Container from "@/components/global/Container.astro";
-import { directus } from '@/lib/directus';
-import { readItems } from '@directus/sdk';
+import { fetchAbout } from '@/lib/directus';
+
+// Default content as fallback
+const defaultContent = {
+    title: "About GenZen Solutions",
+    subtitle: "Since 2017, GenZen Solutions has specialized in helping value-centered leaders navigate critical issues that threaten their visions and missions.",
+    description: "For fifteen years, I have operated at the convergence of strategic intelligence and crisis transformation.\n\nMy work focuses on helping leaders see the complete pattern of exploitation before significant damage occurs, transforming critical threats into opportunities for unprecedented growth.\n\nThis approach has guided clients to close nine-figure deals, prevent sophisticated fraud schemes, and restore power in situations where traditional methods have failed.\n\nNothing is more meaningful than helping clients turn moments of crisis into catalysts for transformation.",
+    image: {
+        filename_download: "adam-king.jpg"
+    }
+};
 
 // Fetch about content from Directus
-const aboutContent = await directus.request(
-  readItems('about', {
-    fields: ['title', 'subtitle', 'description', 'image']
-  })
-);
+let content = defaultContent;
+try {
+    const aboutContent = await fetchAbout();
+    if (aboutContent?.[0]) {
+        content = aboutContent[0];
+    }
+} catch (error) {
+    console.error('Error loading about content:', error);
+}
 
-const content = aboutContent?.[0] || {
-  title: "About GenZen Solutions",
-  subtitle: "Since 2017, GenZen Solutions has specialized in helping value-centered leaders navigate critical issues that threaten their visions and missions.",
-  description: [
-    "For fifteen years, I have operated at the convergence of strategic intelligence and crisis transformation.",
-    "My work focuses on helping leaders see the complete pattern of exploitation before significant damage occurs, transforming critical threats into opportunities for unprecedented growth.",
-    "This approach has guided clients to close nine-figure deals, prevent sophisticated fraud schemes, and restore power in situations where traditional methods have failed.",
-    "Nothing is more meaningful than helping clients turn moments of crisis into catalysts for transformation."
-  ],
-  image: "/adam-king.jpg"
-};
+// Convert description string to paragraphs
+const paragraphs = content.description.split('\n\n');
+
+// Construct image URL
+const imageUrl = import.meta.env.DIRECTUS_URL 
+    ? `${import.meta.env.DIRECTUS_URL}/assets/${content.image.filename_download}`
+    : `/${content.image.filename_download}`;
 ---
 
 <section class="py-32">
@@ -34,7 +43,7 @@ const content = aboutContent?.[0] || {
           {content.subtitle}
         </p>
         <div class="mt-6 space-y-6 text-base text-neutral-600">
-          {content.description.map((paragraph: string) => (
+          {paragraphs.map((paragraph) => (
             <p>{paragraph}</p>
           ))}
         </div>
@@ -44,7 +53,7 @@ const content = aboutContent?.[0] || {
         <div class="mt-6 max-w-[400px]">
           <img
             class="aspect-[4/5] w-full rounded-2xl object-cover"
-            src={content.image}
+            src={imageUrl}
             alt="Adam King, Founder & Chief Strategist of GenZen Solutions"
           />
         </div>
