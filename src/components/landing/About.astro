@@ -1,37 +1,52 @@
 ---
 import Container from "@/components/global/Container.astro";
+import { directus } from '@/lib/directus';
+import { readItems } from '@directus/sdk';
+
+// Fetch about content from Directus
+const aboutContent = await directus.request(
+  readItems('about', {
+    fields: ['title', 'subtitle', 'description', 'image']
+  })
+);
+
+const content = aboutContent?.[0] || {
+  title: "About GenZen Solutions",
+  subtitle: "Since 2017, GenZen Solutions has specialized in helping value-centered leaders navigate critical issues that threaten their visions and missions.",
+  description: [
+    "For fifteen years, I have operated at the convergence of strategic intelligence and crisis transformation.",
+    "My work focuses on helping leaders see the complete pattern of exploitation before significant damage occurs, transforming critical threats into opportunities for unprecedented growth.",
+    "This approach has guided clients to close nine-figure deals, prevent sophisticated fraud schemes, and restore power in situations where traditional methods have failed.",
+    "Nothing is more meaningful than helping clients turn moments of crisis into catalysts for transformation."
+  ],
+  image: "/adam-king.jpg"
+};
 ---
 
 <section class="py-32">
   <Container>
-    <div class="mx-auto max-w-2xl lg:max-w-5xl">
-      <div class="grid gap-12 lg:grid-cols-2 lg:gap-8">
-        <div data-aos="fade-up">
-          <h2 class="text-3xl font-medium tracking-tight sm:text-4xl">About GenZen Solutions</h2>
-          <div class="mt-6 space-y-6 text-base text-neutral-600">
-            <p>Since 2017, GenZen Solutions has specialized in helping value-centered leaders navigate critical issues that threaten their visions and missions.</p>
-            <p>Through strategic partnerships across Europe and Asia, the work has expanded to serve those facing systematic exploitation of their power and legacy. This unique combination of strategic intelligence and cultural understanding enables solutions to complex challenges that others cannot provide.</p>
-            <p>GenZen Solutions steps in when traditional sources of power have become vulnerabilities, when protection systems have failed, and when everything hangs in the balance.</p>
-            <p>Every engagement maintains complete confidentiality, security, and focused outcomes.</p>
-          </div>
-          
-          <h3 class="text-2xl font-medium tracking-tight mt-12">Adam King: Founder & Chief Strategist</h3>
-          <div class="mt-6 space-y-6 text-base text-neutral-600">
-            <p>For fifteen years, I have operated at the convergence of strategic intelligence and crisis transformation.</p>
-            <p>My work focuses on helping leaders see the complete pattern of exploitation before significant damage occurs, transforming critical threats into opportunities for unprecedented growth.</p>
-            <p>This approach has guided clients to close nine-figure deals, prevent sophisticated fraud schemes, and restore power in situations where traditional methods have failed.</p>
-            <p>Nothing is more meaningful than helping clients turn moments of crisis into catalysts for transformation.</p>
-          </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 class="text-h2 font-normal mb-8" data-aos="fade-up">
+          {content.title}
+        </h2>
+        <p class="text-body mb-8 text-[#222222]" data-aos="fade-up" data-aos-delay="100">
+          {content.subtitle}
+        </p>
+        <div class="mt-6 space-y-6 text-base text-neutral-600">
+          {content.description.map((paragraph: string) => (
+            <p>{paragraph}</p>
+          ))}
         </div>
-        
-        <div class="flex items-start justify-center" data-aos="fade-left" data-aos-delay="200">
-          <div class="mt-6 max-w-[400px]">
-            <img
-              class="aspect-[4/5] w-full rounded-2xl object-cover"
-              src="/adam-king.jpg"
-              alt="Adam King, Founder & Chief Strategist of GenZen Solutions"
-            />
-          </div>
+      </div>
+      
+      <div class="flex items-start justify-center" data-aos="fade-left" data-aos-delay="200">
+        <div class="mt-6 max-w-[400px]">
+          <img
+            class="aspect-[4/5] w-full rounded-2xl object-cover"
+            src={content.image}
+            alt="Adam King, Founder & Chief Strategist of GenZen Solutions"
+          />
         </div>
       </div>
     </div>
